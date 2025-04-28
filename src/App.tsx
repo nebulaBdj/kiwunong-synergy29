@@ -1,13 +1,61 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ReactGA from "react-ga4";
 import "./App.css";
 import LandingPageSVG from "./components/svg-components/LandingPageSVG";
 import CustomButton from "./components/buttons/CustomButton";
 import KakaoIcon from "./components/svg-components/KakaoIcon";
 
+const GA_TRACKING_ID = "G-FNKPTGWSL2";
+
 function App() {
   const [isBtnClick, setIsBtnClick] = useState<boolean>(false);
 
-  const handleClick = () => setIsBtnClick(true);
+  // GA 초기화 및 페이지뷰 트래킹
+  useEffect(() => {
+    ReactGA.initialize(GA_TRACKING_ID);
+    ReactGA.send({
+      hitType: "pageview",
+      page: window.location.pathname,
+    });
+  }, []);
+
+  // 스크롤 트래킹 훅
+  useEffect(() => {
+    const thresholds = [25, 50, 75, 90];
+    const triggered: Record<number, boolean> = {};
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const totalHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const currentRatio = Math.floor((scrollTop / totalHeight) * 100);
+
+      thresholds.forEach((threshold) => {
+        if (currentRatio >= threshold && !triggered[threshold]) {
+          triggered[threshold] = true;
+          ReactGA.event("scroll", {
+            event_category: "Scroll Depth",
+            event_label: `${threshold}%`,
+            value: threshold,
+            non_interaction: true,
+          });
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // 버튼 클릭 이벤트 트래킹
+  const handleClick = () => {
+    setIsBtnClick(true);
+    ReactGA.event("click", {
+      event_category: "Button",
+      event_label: "나만의 작물 키우러 가기",
+    });
+  };
+
   const handleClose = () => setIsBtnClick(false);
 
   return (
