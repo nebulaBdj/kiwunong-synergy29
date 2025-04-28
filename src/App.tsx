@@ -45,7 +45,7 @@ function App() {
               지금 당장 토마토 받으러 가기
             </a>
             <a
-              href=""
+              href="https://forms.gle/6q6bdFGPjC3n7kyp8"
               className="flex items-center justify-center gap-2 w-full py-3 bg-[#D2E5D6] rounded-[10px] text-gray-800 text-base font-bold shadow font-pretendard"
             >
               소중한 의견을 전하기
