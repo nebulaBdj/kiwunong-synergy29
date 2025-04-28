@@ -12,8 +12,8 @@ function App() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      <div className="w-[380px] max-w-full shadow-lg rounded-2xl overflow-hidden border border-gray-200 bg-white relative">
-        <LandingPageSVG />
+      <div className="w-[378px] max-w-full shadow-lg rounded-2xl overflow-hidden border border-gray-200 bg-white relative">
+        <LandingPageSVG className="mx-auto" />
         <div className="fixed bottom-3 left-1/2 transform -translate-x-1/2 w-[320px] max-w-[90vw] z-50">
           <button
             onClick={handleClick}
